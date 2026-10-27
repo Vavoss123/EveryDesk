@@ -1,70 +1,78 @@
 # EveryDesk
 
-Free, consent-based remote desktop for Windows. One person shares their screen, and if they choose, lets the
-other person use their mouse and keyboard. Nothing is shared without the host's approval, and the host can take
-control back at any moment.
+EveryDesk is a free remote desktop app for Windows that I built so I could help friends and family with their
+computers without any of the hassle. You share your screen with someone, and if you want, you let them use your
+mouse and keyboard too. Nothing happens unless you say yes, and you can take control back whenever you like.
 
-> **1.0.0 is a pre-release.** It works between two EveryDesk apps through the live connection service, but testing
-> between computers in different homes is still under way. The installer is not code-signed yet, so Windows will
-> warn about it (see below).
+It's still early. It works well between two copies of the app, but I'm only now testing it between different
+houses, so expect a few rough edges.
 
-## Download
+## Getting it
 
-Get **`EveryDesk-Setup-1.0.0-x64.exe`** from the [Releases page](../../releases). Before running it, check that the
-file is exactly the one published, in PowerShell from your Downloads folder:
+Go to the [Releases page](../../releases) and download `EveryDesk-Setup-1.0.0-x64.exe`.
+
+If you want to check you've got the real file (worth doing, see below), open PowerShell in your Downloads folder and run:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 .\EveryDesk-Setup-1.0.0-x64.exe
 ```
 
-The result must match the SHA-256 shown on the release page and in the `.sha256` file. If it differs, delete the file.
+It should match the code on the release page. If it doesn't, delete the file.
 
-## Install
+## Installing it
 
-1. Run the installer as your normal Windows user. No administrator rights or other software are needed.
-2. Because the installer is not signed, Windows may show **Windows protected your PC** (Unknown publisher).
-   **More info → Run anyway** runs it; that is your choice to make. On PCs with **Smart App Control** turned on,
-   Windows blocks unsigned apps completely; EveryDesk cannot be installed there until it is signed.
-3. Open **EveryDesk** from the Start menu. It connects by itself and shows your **device ID**.
+Just run the installer. You don't need admin rights or anything else installed.
 
-To remove it: **Settings → Apps → Installed apps → EveryDesk → Uninstall**. Your device ID is kept unless you also
-delete `%APPDATA%\EveryDesk`.
+One heads up: I haven't paid for a code-signing certificate yet, so Windows will probably say "Windows protected
+your PC" and call me an unknown publisher. If you trust the download (and the checksum matched), click
+**More info** then **Run anyway**. If your PC has Smart App Control turned on, Windows won't let you run it at all,
+and I can't do anything about that until the app is signed.
 
-## Connect
+Once it's installed, open EveryDesk from the Start menu. After a few seconds it should say **Online** and show you
+your device ID.
 
-1. Both people open EveryDesk and wait for **Online**.
-2. Send your device ID to the other person (use **Copy**). Only share it with people you trust.
-3. The person who wants to see the other screen enters the other ID, chooses **View only** or **View and control**,
-   and presses **Request access**.
-4. The other person checks the ID in the prompt, presses **Allow**, then picks a screen or window and presses
-   **Share**. Nothing is shared before that.
-5. Read the nine-digit **safety code** to each other, for example on a phone call. If the codes differ, stop sharing.
-6. For control, the viewer presses **Request control** and the host allows it. The host can press
-   **Revoke control** or **Ctrl+Alt+Shift+R** at any time.
-7. **Stop sharing** or **Disconnect** ends the session. Every new session needs a new request and approval.
+To get rid of it, uninstall it from Settings > Apps. Your device ID sticks around unless you also delete
+`%APPDATA%\EveryDesk`.
 
-## Safety and privacy
+## Using it
 
-- There is no unattended access: every session must be approved by the person at the computer, every time.
-- Screens, mouse and keyboard travel directly between the two computers, end-to-end encrypted. They never pass
-  through the EveryDesk connection service.
-- The connection service (on Cloudflare) introduces the two computers. It sees device IDs, IP addresses and who
-  asks to connect to whom, and keeps logs for three days. It cannot see screens or input, and cannot approve access.
-- The safety code proves you are connected directly to each other, with nobody in between.
+1. You both open EveryDesk and wait for **Online**.
+2. Whoever wants to look at the other screen types in the other person's device ID, picks **View only** or
+   **View and control**, and hits **Request access**.
+3. The other person gets a pop-up. They check the ID is who they expect, press **Allow**, pick a screen or window
+   and press **Share**. Nothing is captured before that.
+4. You'll both see a nine-digit safety code. Read it out to each other over the phone. If it's not the same on
+   both screens, stop sharing, because something's wrong.
+5. If they asked for control, the person sharing gets a second prompt to allow it. They can take it back any time
+   with **Revoke control** or by pressing **Ctrl+Alt+Shift+R**.
+6. Hit **Stop sharing** (or **Disconnect**) when you're done. Next time, you ask again.
 
-## Requirements and limits
+## Privacy
 
-- Windows 10 or 11, 64-bit. Tested on Windows 11.
-- Connections are direct between the two networks. Some strict networks (some mobile and shared networks) may not
-  be able to connect; there is no relay server.
-- Windows does not allow remote control of programs running as administrator, the lock screen, UAC prompts or
-  Ctrl+Alt+Delete.
-- Not included: file transfer, clipboard sharing, audio, unattended access, automatic updates.
-- The free connection service has a daily limit. If it is reached, the app says so and connects again after
-  midnight UTC.
+I wanted this to be something I'd actually trust, so:
+
+- Every session needs the person at the computer to approve it, every single time. There's no way to leave it
+  running for someone to dip into later.
+- Your screen and any mouse or keyboard input go straight between the two computers, encrypted. They don't go
+  through my server.
+- The server is only there to introduce the two apps to each other. It can see device IDs, IP addresses and who's
+  trying to connect to whom, and it keeps logs for three days. It can't see your screen or what you type, and it
+  can't approve anything for you.
+- The safety code is how you know you're talking to the right person and nobody's sitting in the middle.
+
+## What it can't do (yet)
+
+- It needs Windows 10 or 11, 64-bit. I've only tested it properly on Windows 11.
+- Connections go directly between the two computers, and I haven't set up a relay server. Some stricter networks
+  (some mobile and shared connections) might not be able to connect.
+- Windows doesn't let any app control programs running as administrator, the lock screen, UAC prompts, or
+  Ctrl+Alt+Delete, so EveryDesk can't either.
+- No file transfer, clipboard sharing or audio.
+- The connection service runs on a free plan with a daily limit. If it ever runs out, the app will tell you and
+  carry on working again after midnight UTC.
 
 ## Licence
 
-EveryDesk is free to download and use. Its source code is not published in this repository. The app includes
-third-party software (Electron and Chromium, React, ws, zod) under their own licences; their notices are installed
-with the app (`THIRD-PARTY-NOTICES.txt`, `LICENSE.electron.txt`, `LICENSES.chromium.html`).
+It's free to download and use. The source code isn't in this repo. The app does include some open source parts
+(Electron and Chromium, React, ws and zod), and their licences are installed alongside it in the files
+`THIRD-PARTY-NOTICES.txt`, `LICENSE.electron.txt` and `LICENSES.chromium.html`.
