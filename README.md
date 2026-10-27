@@ -9,12 +9,12 @@ houses, so expect a few rough edges.
 
 ## Getting it
 
-Go to the [Releases page](../../releases) and download `EveryDesk-Setup-1.0.0-x64.exe`.
+Go to the [Releases page](../../releases) and download `EveryDesk-Setup-1.2.0-x64.exe`.
 
 If you want to check you've got the real file (worth doing, see below), open PowerShell in your Downloads folder and run:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 .\EveryDesk-Setup-1.0.0-x64.exe
+Get-FileHash -Algorithm SHA256 .\EveryDesk-Setup-1.2.0-x64.exe
 ```
 
 It should match the code on the release page. If it doesn't, delete the file.
@@ -31,6 +31,9 @@ and I can't do anything about that until the app is signed.
 Once it's installed, open EveryDesk from the Start menu. After a few seconds it should say **Online** and show you
 your device ID.
 
+The app checks for new versions by itself and downloads them in the background. It installs when you close it, or you
+can restart from the update box when you're ready. It won't restart you in the middle of a connection.
+
 To get rid of it, uninstall it from Settings > Apps. Your device ID sticks around unless you also delete
 `%APPDATA%\EveryDesk`.
 
@@ -46,6 +49,11 @@ To get rid of it, uninstall it from Settings > Apps. Your device ID sticks aroun
 5. If they asked for control, the person sharing gets a second prompt to allow it. They can take it back any time
    with **Revoke control** or by pressing **Ctrl+Alt+Shift+R**.
 6. Hit **Stop sharing** (or **Disconnect**) when you're done. Next time, you ask again.
+
+You can also go the other way. If you'd like someone to look at *your* screen, use **Invite them to view my screen**
+and put in their ID. They accept, then you choose what to share. Invitations start as view only.
+
+EveryDesk remembers the people you've connected to under **Saved devices**, so you don't have to type their ID again.
 
 ## Privacy
 
@@ -68,6 +76,7 @@ I wanted this to be something I'd actually trust, so:
 - Windows doesn't let any app control programs running as administrator, the lock screen, UAC prompts, or
   Ctrl+Alt+Delete, so EveryDesk can't either.
 - No file transfer, clipboard sharing or audio.
+- If you're still on 1.0.0, it can't connect any more and has no updater, so download the new installer.
 - The connection service runs on a free plan with a daily limit. If it ever runs out, the app will tell you and
   carry on working again after midnight UTC.
 
